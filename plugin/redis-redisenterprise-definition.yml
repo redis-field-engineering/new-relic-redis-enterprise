@@ -1,0 +1,23 @@
+name: com.redis.redisenterprise
+description: Reports status and metrics for Redis Entperise
+protocol_version: 1
+os: linux
+
+commands:
+  metrics:
+    command:
+      - ./bin/redis-redisenterprise
+      - --metrics
+    interval: 15
+
+  inventory:
+    command:
+      - ./bin/redis-redisenterprise
+      - --inventory
+    prefix: config/redis-redisenterprise
+    interval: 15
+  events:
+    command:
+    - ./bin/redis-redisenterprise
+    - --events
+    interval: 15

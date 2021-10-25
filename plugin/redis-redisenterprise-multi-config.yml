@@ -1,0 +1,26 @@
+integration_name: com.redis.redisenterprise
+
+instances:
+  - name: redis-metrics
+    command: metrics
+    arguments:
+      hostname: mague.demo-azure.redislabs.com
+      port: 9443
+      username: christian@redislabs.com
+      password: testing123
+    labels:
+      env: production
+      role: cache
+
+  - name: redis-inventory
+    command: inventory
+    labels:
+      env: production
+      role: cache
+
+  - name: redis-events
+    command: events
+    labels:
+      env: production
+      role: cache      
+
