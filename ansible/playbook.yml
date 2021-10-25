@@ -1,0 +1,53 @@
+---
+
+- hosts: all
+  become: yes
+  become_user: root
+  become_method: sudo
+  gather_facts: yes
+  vars:
+    pkgs:
+      - htop
+      - iotop
+      - git
+      - chrony
+      - sysstat
+      - vim
+      - tmux
+      - tree
+      - tcpdump
+      - unzip
+      - libpcre3-dev
+      - libssl-dev
+      - perl
+      - make
+      - cmake
+      - automake
+      - m4
+      - peg
+      - libtool
+      - autoconf
+      - zlib1g-dev
+      - build-essential
+      - curl
+      - python3-pip
+      - debian-archive-keyring
+      - apt-transport-https
+
+  vars_files:
+    - vars/main.yml
+
+  pre_tasks:
+    - name: Update Apt Cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 86400
+        force_apt_get: yes
+
+    - name: Ubuntu Packages
+      apt: >
+        pkg={{ pkgs }}
+        state=present
+
+
+  post_tasks:

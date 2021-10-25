@@ -1,0 +1,6 @@
+.vagrant/*
+ansible/vars/main.yml
+ansible/files/*.whl
+*.log
+devnote*.md
+.venv/*
