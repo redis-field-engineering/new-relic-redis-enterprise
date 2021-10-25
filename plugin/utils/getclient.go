@@ -1,4 +1,4 @@
-package enterpriseredis
+package utils
 
 import (
 	"crypto/tls"
