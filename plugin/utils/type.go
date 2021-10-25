@@ -58,3 +58,15 @@ type RLNodeCapacity struct {
 	NodeCount   int
 	ActiveNodes int
 }
+
+// RLdbs is the structure of the databases
+type RLdbd struct {
+	Uid       int `json:"uid"`
+	Endpoints []struct {
+		Addr []string `json:"addr"`
+	} `json:"endpoints"`
+	MemorySize  int64  `json:"memory_size"`
+	Name        string `json:"name"`
+	Replication bool   `json:"replication"`
+	ShardsCount int    `json:"shards_count"`
+}

@@ -31,6 +31,8 @@ func main() {
 	i, err := integration.New(integrationName, integrationVersion, integration.Args(&args))
 	panicOnErr(err)
 
+	bdbEnts := make(map[int]*integration.Entity)
+
 	// Fetch the list of Redis databases
 	conf := &utils.RLConf{
 		Hostname: args.Hostname,
@@ -46,11 +48,21 @@ func main() {
 	// Get node information
 	nodes, err := utils.GetNodes(conf)
 	panicOnErr(err)
-	fmt.Printf("+%v\n", nodes)
+
+	// Get the list of Redis databases
+	bdbs, err := utils.GetBDBs(conf)
+	panicOnErr(err)
 
 	// Create Entity, entities name must be unique
 	e1, err := i.NewEntity(args.Hostname, "RedisEnterpriseCluster", args.Hostname)
 	panicOnErr(err)
+
+	for _, val := range bdbs {
+		s := fmt.Sprintf("%s:%s", args.Hostname, val.DBName)
+		bdbEnts[val.Uid], err = i.NewEntity(s, "RedisEnterpriseDB", s)
+		panicOnErr(err)
+	}
+
 	// Add event when redis starts
 	if args.All() || args.Events {
 		fmt.Println("Events go here")
@@ -83,10 +95,18 @@ func main() {
 		e1.AddMetric(j)
 		k, _ := integration.Gauge(time.Now(), "license.ClusterNodes", float64(nodes.NodeCount))
 		e1.AddMetric(k)
+		for _, val := range bdbs {
+			//TODO: Add in all of the metrics from the DB config
+			x, _ := integration.Gauge(time.Now(), "bdb.ShardCount", float64(val.ShardsUsed))
+			bdbEnts[val.Uid].AddMetric(x)
+		}
 	}
 
-	// Add the first entity to the integration
+	// Add all of the entities to the integration
 	i.AddEntity(e1)
+	for _, val := range bdbs {
+		i.AddEntity(bdbEnts[val.Uid])
+	}
 
 	// Print the JSON document to stdout
 	panicOnErr(i.Publish())
