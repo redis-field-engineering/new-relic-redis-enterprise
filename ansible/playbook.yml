@@ -33,6 +33,7 @@
       - python3-pip
       - debian-archive-keyring
       - apt-transport-https
+      - golang-go
 
   vars_files:
     - vars/main.yml
