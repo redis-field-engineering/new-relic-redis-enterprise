@@ -73,17 +73,17 @@ func main() {
 	// Add Metric
 	if args.All() || args.Metrics {
 		fmt.Println("Metrics go here")
-		g, _ := integration.Gauge(time.Now(), "license.DaysUntilExpiration", float64(license.DaysUntilExpiration))
+		g, _ := integration.Gauge(time.Now(), "cluster.DaysUntilExpiration", float64(license.DaysUntilExpiration))
 		e1.AddMetric(g)
-		f, _ := integration.Gauge(time.Now(), "license.ShardsLicense", float64(license.ShardsLimit))
+		f, _ := integration.Gauge(time.Now(), "cluster.ShardsLicense", float64(license.ShardsLimit))
 		e1.AddMetric(f)
-		h, _ := integration.Gauge(time.Now(), "license.ClusterTotalMemory", float64(nodes.NodeMemory))
+		h, _ := integration.Gauge(time.Now(), "cluster.ClusterTotalMemory", float64(nodes.NodeMemory))
 		e1.AddMetric(h)
-		i, _ := integration.Gauge(time.Now(), "license.ClusterTotalCores", float64(nodes.NodeCores))
+		i, _ := integration.Gauge(time.Now(), "cluster.ClusterTotalCores", float64(nodes.NodeCores))
 		e1.AddMetric(i)
-		j, _ := integration.Gauge(time.Now(), "license.ClusterActiveNodes", float64(nodes.ActiveNodes))
+		j, _ := integration.Gauge(time.Now(), "cluster.ClusterActiveNodes", float64(nodes.ActiveNodes))
 		e1.AddMetric(j)
-		k, _ := integration.Gauge(time.Now(), "license.ClusterNodes", float64(nodes.NodeCount))
+		k, _ := integration.Gauge(time.Now(), "cluster.ClusterNodes", float64(nodes.NodeCount))
 		e1.AddMetric(k)
 		for _, val := range bdbs {
 			aa, _ := integration.Gauge(time.Now(), "bdb.ShardCount", float64(val.ShardsUsed))
