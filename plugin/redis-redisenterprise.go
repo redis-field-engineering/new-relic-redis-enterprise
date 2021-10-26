@@ -70,16 +70,6 @@ func main() {
 		//e1.AddEvent(ev)
 	}
 
-	// Add Inventory item
-	if args.All() || args.Inventory {
-		fmt.Print("inventory goes here")
-		//key, value := queryAttrRedisInfo("redis_version", instanceOnePort)
-		//if key != "" {
-		//	err = e1.AddInventoryItem(key, "value", value)
-		//}
-		//panicOnErr(err)
-	}
-
 	// Add Metric
 	if args.All() || args.Metrics {
 		fmt.Println("Metrics go here")
@@ -96,9 +86,12 @@ func main() {
 		k, _ := integration.Gauge(time.Now(), "license.ClusterNodes", float64(nodes.NodeCount))
 		e1.AddMetric(k)
 		for _, val := range bdbs {
-			//TODO: Add in all of the metrics from the DB config
-			x, _ := integration.Gauge(time.Now(), "bdb.ShardCount", float64(val.ShardsUsed))
-			bdbEnts[val.Uid].AddMetric(x)
+			aa, _ := integration.Gauge(time.Now(), "bdb.ShardCount", float64(val.ShardsUsed))
+			bdbEnts[val.Uid].AddMetric(aa)
+			ab, _ := integration.Gauge(time.Now(), "bdb.Endpoints", float64(val.Endpoints))
+			bdbEnts[val.Uid].AddMetric(ab)
+			ac, _ := integration.Gauge(time.Now(), "bdb.MemoryLimit", float64(val.Limit))
+			bdbEnts[val.Uid].AddMetric(ac)
 		}
 	}
 
