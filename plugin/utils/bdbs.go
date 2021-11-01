@@ -11,6 +11,7 @@ type bdbConf struct {
 	Limit      int64
 	ShardsUsed int
 	Endpoints  int
+	Bigstore   bool
 }
 
 var bdbsDat []RLdbd
@@ -35,6 +36,7 @@ func GetBDBs(conf *RLConf) (map[int]bdbConf, error) {
 			Uid:        bdb.Uid,
 			Limit:      bdb.MemorySize,
 			ShardsUsed: bdb.ShardsCount,
+			Bigstore:   bdb.Bigstore,
 		}
 
 		if bdb.Replication {
@@ -45,6 +47,24 @@ func GetBDBs(conf *RLConf) (map[int]bdbConf, error) {
 
 		d[bdb.Uid] = j
 
+	}
+
+	return d, nil
+
+}
+
+func GetBDBStats(conf *RLConf) (RLdbStats, error) {
+	d := RLdbStats{}
+	u, httpCode, err := APIget(conf, "/v1/bdbs/stats/last")
+	if err != nil {
+		return d, fmt.Errorf("unable to connect: %s", err)
+	}
+	if httpCode != 200 {
+		return d, fmt.Errorf("HTTP Status code is wrong:%d - should be 200", httpCode)
+	}
+
+	if err := json.Unmarshal([]byte(u), &d); err != nil {
+		return d, err
 	}
 
 	return d, nil

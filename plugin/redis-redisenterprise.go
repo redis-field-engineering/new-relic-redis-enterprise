@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"reflect"
 	"time"
 
 	"github.com/Redis-Field-Engineering/newrelic-redis-enterprise/plugin/utils"
@@ -43,15 +44,23 @@ func main() {
 
 	// Get the license information
 	license, err := utils.GetLicense(conf)
+	fmt.Printf("%+v\n", license)
 	panicOnErr(err)
 
 	// Get node information
 	nodes, err := utils.GetNodes(conf)
+	fmt.Printf("%+v\n", nodes)
 	panicOnErr(err)
 
 	// Get the list of Redis databases
 	bdbs, err := utils.GetBDBs(conf)
 	panicOnErr(err)
+	fmt.Printf("%+v\n", bdbs)
+
+	// Grab the Redis DB stats
+	bdbStats, err := utils.GetBDBStats(conf)
+	panicOnErr(err)
+	fmt.Printf("%+v\n", bdbStats)
 
 	// Create Entity, entities name must be unique
 	e1, err := i.NewEntity(args.Hostname, "RedisEnterpriseCluster", args.Hostname)
@@ -72,7 +81,6 @@ func main() {
 
 	// Add Metric
 	if args.All() || args.Metrics {
-		fmt.Println("Metrics go here")
 		g, _ := integration.Gauge(time.Now(), "cluster.DaysUntilExpiration", float64(license.DaysUntilExpiration))
 		e1.AddMetric(g)
 		f, _ := integration.Gauge(time.Now(), "cluster.ShardsLicense", float64(license.ShardsLimit))
@@ -86,12 +94,32 @@ func main() {
 		k, _ := integration.Gauge(time.Now(), "cluster.ClusterNodes", float64(nodes.NodeCount))
 		e1.AddMetric(k)
 		for _, val := range bdbs {
+			// Setup the list of metrics we want to submit
+			bdb_stats_list := []string{
+				"AvgLatency", "AvgReadLatency", "AvgWriteLatency", "Conns", "EgressBytes", "EvictedObjects",
+				"ExpiredObjects", "IngressBytes", "OtherReq", "ReadHits", "ReadMisses", "ReadReq",
+				"ShardCPUSystem", "ShardCPUUser", "TotalReq", "UsedMemory", "WriteHits", "WriteMisses", "WriteReq"}
+
+			// If the DB has RoF enabled, add the RoF metrics otherwise skip
+			if val.Bigstore {
+				bdb_stats_list = append(bdb_stats_list, []string{
+					"BigstoreObjsRam", "BigstoreObjsFlash", "BigstoreIoReads",
+					"BigstoreIoWrites", "BigstoreThroughput", "BigWriteRam",
+					"BigWriteFlash", "BigDelRam", "BigDelFlash"}...)
+			}
+
 			aa, _ := integration.Gauge(time.Now(), "bdb.ShardCount", float64(val.ShardsUsed))
 			bdbEnts[val.Uid].AddMetric(aa)
 			ab, _ := integration.Gauge(time.Now(), "bdb.Endpoints", float64(val.Endpoints))
 			bdbEnts[val.Uid].AddMetric(ab)
 			ac, _ := integration.Gauge(time.Now(), "bdb.MemoryLimit", float64(val.Limit))
 			bdbEnts[val.Uid].AddMetric(ac)
+			// Grab all bdb Gauges
+			for _, x := range bdb_stats_list {
+				s := reflect.ValueOf(bdbStats[val.Uid]).FieldByName(x).Interface().(float64)
+				ad, _ := integration.Gauge(time.Now(), fmt.Sprintf("bdb.%s", x), s)
+				bdbEnts[val.Uid].AddMetric(ad)
+			}
 		}
 	}
 

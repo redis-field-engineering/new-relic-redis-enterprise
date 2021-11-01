@@ -69,4 +69,38 @@ type RLdbd struct {
 	Name        string `json:"name"`
 	Replication bool   `json:"replication"`
 	ShardsCount int    `json:"shards_count"`
+	Bigstore    bool   `json:"bigstore"`
+}
+
+type RLdbStats map[int]RLdbStat
+
+type RLdbStat struct {
+	AvgLatency         float64 `json:"avg_latency"`
+	AvgReadLatency     float64 `json:"avg_read_latency"`
+	AvgWriteLatency    float64 `json:"avg_write_latency"`
+	Conns              float64 `json:"conns"`
+	EgressBytes        float64 `json:"egress_bytes"`
+	EvictedObjects     float64 `json:"evicted_objects"`
+	ExpiredObjects     float64 `json:"expired_objects"`
+	IngressBytes       float64 `json:"ingress_bytes"`
+	OtherReq           float64 `json:"other_req"`
+	ReadHits           float64 `json:"read_hits"`
+	ReadMisses         float64 `json:"read_misses"`
+	ReadReq            float64 `json:"read_req"`
+	ShardCPUSystem     float64 `json:"shard_cpu_system"`
+	ShardCPUUser       float64 `json:"shard_cpu_user"`
+	TotalReq           float64 `json:"total_req"`
+	UsedMemory         float64 `json:"used_memory"`
+	WriteHits          float64 `json:"write_hits"`
+	WriteMisses        float64 `json:"write_misses"`
+	WriteReq           float64 `json:"write_req"`
+	BigstoreObjsRam    float64 `json:"bigstore_objs_ram"`
+	BigstoreObjsFlash  float64 `json:"bigstore_objs_flash"`
+	BigstoreIoReads    float64 `json:"bigstore_io_reads"`
+	BigstoreIoWrites   float64 `json:"bigstore_io_writes"`
+	BigstoreThroughput float64 `json:"bigstore_throughput"`
+	BigWriteRam        float64 `json:"big_write_ram"`
+	BigWriteFlash      float64 `json:"big_write_flash"`
+	BigDelRam          float64 `json:"big_del_ram"`
+	BigDelFlash        float64 `json:"big_del_flash"`
 }
