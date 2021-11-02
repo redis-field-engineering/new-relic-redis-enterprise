@@ -7,6 +7,7 @@ import (
 
 	"github.com/Redis-Field-Engineering/newrelic-redis-enterprise/plugin/utils"
 	sdkArgs "github.com/newrelic/infra-integrations-sdk/v4/args"
+	"github.com/newrelic/infra-integrations-sdk/v4/data/event"
 	"github.com/newrelic/infra-integrations-sdk/v4/integration"
 )
 
@@ -44,23 +45,19 @@ func main() {
 
 	// Get the license information
 	license, err := utils.GetLicense(conf)
-	fmt.Printf("%+v\n", license)
 	panicOnErr(err)
 
 	// Get node information
 	nodes, err := utils.GetNodes(conf)
-	fmt.Printf("%+v\n", nodes)
 	panicOnErr(err)
 
 	// Get the list of Redis databases
 	bdbs, err := utils.GetBDBs(conf)
 	panicOnErr(err)
-	fmt.Printf("%+v\n", bdbs)
 
 	// Grab the Redis DB stats
 	bdbStats, err := utils.GetBDBStats(conf)
 	panicOnErr(err)
-	fmt.Printf("%+v\n", bdbStats)
 
 	// Create Entity, entities name must be unique
 	e1, err := i.NewEntity(args.Hostname, "RedisEnterpriseCluster", args.Hostname)
@@ -74,9 +71,30 @@ func main() {
 
 	// Add event when redis starts
 	if args.All() || args.Events {
-		fmt.Println("Events go here")
-		//ev, _ := event.NewNotification("Redis Server recently started")
-		//e1.AddEvent(ev)
+		events, err := utils.GetEvents(conf)
+		panicOnErr(err)
+		for _, evnt := range events {
+			tags := make(map[string]interface{})
+			outstring := ""
+			if evnt.Description != "" {
+				outstring = evnt.Description
+			} else {
+				outstring = evnt.Type
+			}
+			p := []string{"OriginatorUsername", "OriginatorEmail", "NodeUID", "ModuleName", "BdbName", "UserUID", "Type", "Description"}
+			for _, x := range p {
+				s := reflect.ValueOf(evnt).FieldByName(x).Interface().(string)
+				if s != "" {
+					tags[x] = s
+				}
+			}
+			ev, err := event.NewNotification(outstring)
+			ev.Attributes = tags
+			ev.Timestamp = evnt.Time.Unix()
+			panicOnErr(err)
+			e1.AddEvent(ev)
+
+		}
 	}
 
 	// Add Metric

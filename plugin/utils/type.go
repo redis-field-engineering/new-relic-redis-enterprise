@@ -104,3 +104,27 @@ type RLdbStat struct {
 	BigDelRam          float64 `json:"big_del_ram"`
 	BigDelFlash        float64 `json:"big_del_flash"`
 }
+
+type RLEvents []RLEvent
+type RLEvent struct {
+	ModuleName         string    `json:"module_name,omitempty"`
+	ModuleUID          string    `json:"module_uid,omitempty"`
+	OriginatorEmail    string    `json:"originator_email,omitempty"`
+	OriginatorUID      string    `json:"originator_uid"`
+	OriginatorUsername string    `json:"originator_username"`
+	Severity           string    `json:"severity"`
+	Time               time.Time `json:"time"`
+	Type               string    `json:"type"`
+	UserUID            string    `json:"user_uid,omitempty"`
+	NodeCount          int       `json:"node_count,omitempty"`
+	State              bool      `json:"state,omitempty"`
+	Username           string    `json:"username,omitempty"`
+	NodeUID            string    `json:"node_uid,omitempty"`
+	BdbName            string    `json:"bdb_name,omitempty"`
+	BdbUID             string    `json:"bdb_uid,omitempty"`
+	CheckName          string    `json:"check_name,omitempty"`
+	ChecksError        string    `json:"checks_error,omitempty"`
+	ChecksTime         int       `json:"checks_time,omitempty"`
+	Description        string    `json:"description,omitempty"`
+	UserName           string    `json:"user_name,omitempty"`
+}

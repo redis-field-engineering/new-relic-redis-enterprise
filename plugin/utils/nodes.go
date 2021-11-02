@@ -9,7 +9,7 @@ var nodeDat RLNodes
 var capa RLNodeCapacity
 
 func GetNodes(conf *RLConf) (RLNodeCapacity, error) {
-	u, httpCode, err := APIget(conf, "/v1/nodes")
+	u, httpCode, err := APIget(conf, "/v1/nodes", nil)
 	if err != nil {
 		return capa, fmt.Errorf("unable to connect: %s", err)
 	}

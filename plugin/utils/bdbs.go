@@ -18,7 +18,7 @@ var bdbsDat []RLdbd
 
 func GetBDBs(conf *RLConf) (map[int]bdbConf, error) {
 	d := make(map[int]bdbConf)
-	u, httpCode, err := APIget(conf, "/v1/bdbs")
+	u, httpCode, err := APIget(conf, "/v1/bdbs", nil)
 	if err != nil {
 		return d, fmt.Errorf("unable to connect: %s", err)
 	}
@@ -55,7 +55,7 @@ func GetBDBs(conf *RLConf) (map[int]bdbConf, error) {
 
 func GetBDBStats(conf *RLConf) (RLdbStats, error) {
 	d := RLdbStats{}
-	u, httpCode, err := APIget(conf, "/v1/bdbs/stats/last")
+	u, httpCode, err := APIget(conf, "/v1/bdbs/stats/last", nil)
 	if err != nil {
 		return d, fmt.Errorf("unable to connect: %s", err)
 	}
