@@ -46,6 +46,14 @@ func main() {
 		Pass:     args.Password,
 	}
 
+	// Check to see if we are connecting to the cluster leader if not just exit
+	// This is useful when running the integration all cluster nodes as only the master will submit metrics/events
+
+	redir, err := utils.APIisRedirect(conf, "/v1/cluster")
+	if err != nil || redir {
+		return
+	}
+
 	// Get the license information
 	license, err := utils.GetLicense(conf)
 	panicOnErr(err)
