@@ -5,9 +5,9 @@ import (
 	"fmt"
 )
 
-func GetEvents(conf *RLConf) (RLEvents, error) {
+func GetEvents(conf *RLConf, params map[string]string) (RLEvents, error) {
 	dat := RLEvents{}
-	u, httpCode, err := APIget(conf, "/v1/logs", nil)
+	u, httpCode, err := APIget(conf, "/v1/logs", params)
 	if err != nil {
 		return dat, fmt.Errorf("unable to connect: %s", err)
 	}

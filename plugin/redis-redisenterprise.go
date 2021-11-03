@@ -5,6 +5,8 @@ import (
 	"reflect"
 	"time"
 
+	"github.com/leekchan/timeutil"
+
 	"github.com/Redis-Field-Engineering/newrelic-redis-enterprise/plugin/utils"
 	sdkArgs "github.com/newrelic/infra-integrations-sdk/v4/args"
 	"github.com/newrelic/infra-integrations-sdk/v4/data/event"
@@ -13,10 +15,11 @@ import (
 
 type argumentList struct {
 	sdkArgs.DefaultArgumentList
-	Hostname string `default:"localhost" help:"Hostname or IP where Redis server is running."`
-	Port     int    `default:"9443" help:"Port on which Redis server is listening."`
-	Username string `default:"admin@example.com" help:"Username to login as."`
-	Password string `default:"myPass" help:"Password for login."`
+	Hostname  string `default:"localhost" help:"Hostname or IP where Redis server is running."`
+	Port      int    `default:"9443" help:"Port on which Redis server is listening."`
+	Username  string `default:"admin@example.com" help:"Username to login as."`
+	Password  string `default:"myPass" help:"Password for login."`
+	Eventtime int    `default:"60" help:"Interval for scraping events."`
 }
 
 const (
@@ -71,7 +74,9 @@ func main() {
 
 	// Add event when redis starts
 	if args.All() || args.Events {
-		events, err := utils.GetEvents(conf)
+		st := time.Now().Add(time.Duration(-args.Eventtime) * time.Second)
+		params := map[string]string{"stime": timeutil.Strftime(&st, "%Y-%m-%dT%H:%M:%SZ")}
+		events, err := utils.GetEvents(conf, params)
 		panicOnErr(err)
 		for _, evnt := range events {
 			tags := make(map[string]interface{})
