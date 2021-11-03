@@ -22,7 +22,7 @@ instances:
     command: events
     interval: 60
     arguments:
-      event_interval: 60
+      eventtime: 60
     labels:
       env: production
       role: cache      
