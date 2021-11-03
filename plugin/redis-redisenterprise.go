@@ -110,6 +110,11 @@ func main() {
 		}
 	}
 
+	// Add Inventory
+	if args.All() || args.Inventory {
+		err := e1.AddInventoryItem("RedisEnterpriseType", "value", "cluster")
+		panicOnErr(err)
+	}
 	// Add Metric
 	if args.All() || args.Metrics {
 		g, _ := integration.Gauge(time.Now(), "cluster.DaysUntilExpiration", float64(license.DaysUntilExpiration))
