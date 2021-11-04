@@ -1,6 +1,6 @@
 name: com.redis.redisenterprise
 description: Reports status and metrics for Redis Entperise
-protocol_version: 1
+protocol_version: 4
 os: linux
 
 commands:
@@ -20,4 +20,4 @@ commands:
     command:
     - ./bin/redis-redisenterprise
     - --events
-    interval: 15
+    interval: 60
