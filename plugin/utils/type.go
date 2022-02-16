@@ -121,7 +121,7 @@ type RLEvent struct {
 	Username           string    `json:"username,omitempty"`
 	NodeUID            string    `json:"node_uid,omitempty"`
 	BdbName            string    `json:"bdb_name,omitempty"`
-	BdbUID             string    `json:"bdb_uid,omitempty"`
+	BdbUID             int       `json:"bdb_uid,omitempty"`
 	CheckName          string    `json:"check_name,omitempty"`
 	ChecksError        string    `json:"checks_error,omitempty"`
 	ChecksTime         int       `json:"checks_time,omitempty"`

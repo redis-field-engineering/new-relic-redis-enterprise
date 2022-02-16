@@ -5,12 +5,13 @@ import (
 	"reflect"
 	"time"
 
+	"github.com/Redis-Field-Engineering/newrelic-redis-enterprise/plugin/utils"
 	"github.com/leekchan/timeutil"
 
-	"github.com/Redis-Field-Engineering/newrelic-redis-enterprise/plugin/utils"
-	sdkArgs "github.com/newrelic/infra-integrations-sdk/v4/args"
-	"github.com/newrelic/infra-integrations-sdk/v4/data/event"
-	"github.com/newrelic/infra-integrations-sdk/v4/integration"
+	sdkArgs "github.com/newrelic/infra-integrations-sdk/args"
+	"github.com/newrelic/infra-integrations-sdk/data/event"
+	"github.com/newrelic/infra-integrations-sdk/data/metric"
+	"github.com/newrelic/infra-integrations-sdk/integration"
 )
 
 type argumentList struct {
@@ -71,12 +72,12 @@ func main() {
 	panicOnErr(err)
 
 	// Create Entity, entities name must be unique
-	e1, err := i.NewEntity(args.Hostname, "RedisEnterpriseCluster", args.Hostname)
+	e1, err := i.Entity(args.Hostname, "custom")
 	panicOnErr(err)
 
 	for _, val := range bdbs {
 		s := fmt.Sprintf("%s:%s", args.Hostname, val.DBName)
-		bdbEnts[val.Uid], err = i.NewEntity(s, "RedisEnterpriseDB", s)
+		bdbEnts[val.Uid], err = i.Entity(s, "custom")
 		panicOnErr(err)
 	}
 
@@ -101,34 +102,44 @@ func main() {
 					tags[x] = s
 				}
 			}
-			ev, err := event.NewNotification(outstring)
+			ev := event.NewNotification(outstring)
 			ev.Attributes = tags
-			ev.Timestamp = evnt.Time.Unix()
+			/*
+			 TODO: Add event time somehow
+			 ev.Timestamp = evnt.Time.Unix() doesn't work in v3
+			 maybe persist and just get the current run time so we don't duplicate events
+			 https://github.com/newrelic/infra-integrations-sdk/blob/master/docs/toolset/persist.md
+			*/
+			err = e1.AddEvent(ev)
 			panicOnErr(err)
-			e1.AddEvent(ev)
 
 		}
 	}
 
 	// Add Inventory
 	if args.All() || args.Inventory {
-		err := e1.AddInventoryItem("RedisEnterpriseType", "value", "cluster")
+		err := e1.SetInventoryItem("RedisEnterpriseType", "value", "cluster")
 		panicOnErr(err)
+		for _, x := range bdbEnts {
+			err := x.SetInventoryItem("RedisEnterpriseType", "value", "database")
+			panicOnErr(err)
+		}
 	}
 	// Add Metric
 	if args.All() || args.Metrics {
-		g, _ := integration.Gauge(time.Now(), "cluster.DaysUntilExpiration", float64(license.DaysUntilExpiration))
-		e1.AddMetric(g)
-		f, _ := integration.Gauge(time.Now(), "cluster.ShardsLicense", float64(license.ShardsLimit))
-		e1.AddMetric(f)
-		h, _ := integration.Gauge(time.Now(), "cluster.ClusterTotalMemory", float64(nodes.NodeMemory))
-		e1.AddMetric(h)
-		i, _ := integration.Gauge(time.Now(), "cluster.ClusterTotalCores", float64(nodes.NodeCores))
-		e1.AddMetric(i)
-		j, _ := integration.Gauge(time.Now(), "cluster.ClusterActiveNodes", float64(nodes.ActiveNodes))
-		e1.AddMetric(j)
-		k, _ := integration.Gauge(time.Now(), "cluster.ClusterNodes", float64(nodes.NodeCount))
-		e1.AddMetric(k)
+		ms := e1.NewMetricSet("RedisEnterprise")
+		err = ms.SetMetric("cluster.DaysUntilExpiration", float64(license.DaysUntilExpiration), metric.GAUGE)
+		panicOnErr(err)
+		err = ms.SetMetric("cluster.ShardsLicense", float64(license.ShardsLimit), metric.GAUGE)
+		panicOnErr(err)
+		err = ms.SetMetric("cluster.ClusterTotalMemory", float64(nodes.NodeMemory), metric.GAUGE)
+		panicOnErr(err)
+		err = ms.SetMetric("cluster.ClusterTotalCores", float64(nodes.NodeCores), metric.GAUGE)
+		panicOnErr(err)
+		err = ms.SetMetric("cluster.ClusterActiveNodes", float64(nodes.ActiveNodes), metric.GAUGE)
+		panicOnErr(err)
+		err = ms.SetMetric("cluster.ClusterNodes", float64(nodes.NodeCount), metric.GAUGE)
+		panicOnErr(err)
 		for _, val := range bdbs {
 			// Setup the list of metrics we want to submit
 			bdb_stats_list := []string{
@@ -144,28 +155,22 @@ func main() {
 					"BigWriteFlash", "BigDelRam", "BigDelFlash"}...)
 			}
 
-			aa, _ := integration.Gauge(time.Now(), "bdb.ShardCount", float64(val.ShardsUsed))
-			bdbEnts[val.Uid].AddMetric(aa)
-			ab, _ := integration.Gauge(time.Now(), "bdb.Endpoints", float64(val.Endpoints))
-			bdbEnts[val.Uid].AddMetric(ab)
-			ac, _ := integration.Gauge(time.Now(), "bdb.MemoryLimit", float64(val.Limit))
-			bdbEnts[val.Uid].AddMetric(ac)
-			// Grab all bdb Gauges
+			bdbMs := bdbEnts[val.Uid].NewMetricSet("RedisEnterprise")
+			err = bdbMs.SetMetric("bdb.ShardCount", float64(val.ShardsUsed), metric.GAUGE)
+			panicOnErr(err)
+			err = bdbMs.SetMetric("bdb.Endpoints", float64(val.Endpoints), metric.GAUGE)
+			panicOnErr(err)
+			err = bdbMs.SetMetric("bdb.MemoryLimit", float64(val.Limit), metric.GAUGE)
+			panicOnErr(err)
+			//// Grab all bdb Gauges
 			for _, x := range bdb_stats_list {
 				s := reflect.ValueOf(bdbStats[val.Uid]).FieldByName(x).Interface().(float64)
-				ad, _ := integration.Gauge(time.Now(), fmt.Sprintf("bdb.%s", x), s)
-				bdbEnts[val.Uid].AddMetric(ad)
+				err = bdbMs.SetMetric(fmt.Sprintf("bdb.%s", x), float64(s), metric.GAUGE)
+				panicOnErr(err)
 			}
 		}
 	}
 
-	// Add all of the entities to the integration
-	i.AddEntity(e1)
-	for _, val := range bdbs {
-		i.AddEntity(bdbEnts[val.Uid])
-	}
-
-	// Print the JSON document to stdout
 	panicOnErr(i.Publish())
 }
 
