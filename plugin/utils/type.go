@@ -70,6 +70,10 @@ type RLdbd struct {
 	Replication bool   `json:"replication"`
 	ShardsCount int    `json:"shards_count"`
 	Bigstore    bool   `json:"bigstore"`
+	Crdt        bool   `json:"crdt"`
+	SyncSources []struct {
+		Status string `json:"status"`
+	} `json:"sync_sources"`
 }
 
 type RLdbStats map[int]RLdbStat

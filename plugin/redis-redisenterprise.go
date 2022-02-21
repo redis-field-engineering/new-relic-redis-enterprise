@@ -168,6 +168,12 @@ func main() {
 				err = bdbMs.SetMetric(fmt.Sprintf("bdb.%s", x), float64(s), metric.GAUGE)
 				panicOnErr(err)
 			}
+
+			if val.Crdt {
+				err = bdbMs.SetMetric("bdb.CrdtSyncStatus", float64(val.SyncStatus), metric.GAUGE)
+				panicOnErr(err)
+
+			}
 		}
 	}
 
