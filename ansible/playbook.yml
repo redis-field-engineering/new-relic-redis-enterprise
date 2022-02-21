@@ -33,12 +33,16 @@
       - python3-pip
       - debian-archive-keyring
       - apt-transport-https
-      - golang-go
+      - golang
 
   vars_files:
     - vars/main.yml
 
   pre_tasks:
+    - name: Add Golang PPA
+      apt_repository:
+        repo: 'ppa:longsleep/golang-backports'
+        state: present
     - name: Update Apt Cache
       apt:
         update_cache: yes
@@ -51,6 +55,7 @@
         state=present
 
 
+
   post_tasks:
     - name: Get the Agent
       get_url:
@@ -61,10 +66,10 @@
       command: /bin/bash /var/tmp/newrelic-installer.sh
       args:
         creates: /usr/local/bin/newrelic
-#    - name: Install the agent
-#      command: /usr/local/bin/newrelic install
-#      args:
-#        creates: /usr/local/bin/newrelic-plugin-agent
-#      environment:
-#        NEW_RELIC_API_KEY: "{{ new_relic_api_key }}"
-#        NEW_RELIC_ACCOUNT_ID: "{{ new_relic_account_id }}"
+        #    - name: Install the agent
+        #      command: /usr/local/bin/newrelic install
+        #      args:
+        #        creates: /usr/local/bin/newrelic-plugin-agent
+        #      environment:
+        #        NEW_RELIC_API_KEY: "{{ new_relic_api_key }}"
+        #        NEW_RELIC_ACCOUNT_ID: "{{ new_relic_account_id }}"
