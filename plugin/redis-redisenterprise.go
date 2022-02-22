@@ -128,6 +128,9 @@ func main() {
 	// Add Metric
 	if args.All() || args.Metrics {
 		ms := e1.NewMetricSet("RedisEnterprise")
+		clusterTotalShards := 0
+		clusterTotalMemoryUsage := 0.0
+		clusterTotalOps := 0.0
 		err = ms.SetMetric("cluster.DaysUntilExpiration", float64(license.DaysUntilExpiration), metric.GAUGE)
 		panicOnErr(err)
 		err = ms.SetMetric("cluster.ShardsLicense", float64(license.ShardsLimit), metric.GAUGE)
@@ -168,7 +171,45 @@ func main() {
 				err = bdbMs.SetMetric(fmt.Sprintf("bdb.%s", x), float64(s), metric.GAUGE)
 				panicOnErr(err)
 			}
+
+			// Update the total cluster metrics
+			clusterTotalShards += val.ShardsUsed
+			clusterTotalMemoryUsage += float64(bdbStats[val.Uid].UsedMemory)
+			clusterTotalOps += float64(bdbStats[val.Uid].TotalReq)
+
+			if val.Crdt {
+				err = bdbMs.SetMetric("bdb.CrdtSyncStatus", float64(val.SyncStatus), metric.GAUGE)
+				panicOnErr(err)
+				st := time.Now().Add(time.Duration(-args.Eventtime) * time.Second)
+				params := map[string]string{
+					"stime":    timeutil.Strftime(&st, "%Y-%m-%dT%H:%M:%SZ"),
+					"interval": "10sec",
+				}
+				stats, err := utils.GetCrdt(conf, val.Uid, params)
+				panicOnErr(err)
+				err = bdbMs.SetMetric("crdt.CrdtEgressBytes", float64(stats.CrdtEgressBytes), metric.GAUGE)
+				panicOnErr(err)
+				err = bdbMs.SetMetric("crdt.CrdtEgressBytesDecompressed", float64(stats.CrdtEgressBytesDecompressed), metric.GAUGE)
+				panicOnErr(err)
+				err = bdbMs.SetMetric("crdt.CrdtIngressBytes", float64(stats.CrdtIngressBytes), metric.GAUGE)
+				panicOnErr(err)
+				err = bdbMs.SetMetric("crdt.CrdtIngressBytesDecompressed", float64(stats.CrdtIngressBytesDecompressed), metric.GAUGE)
+				panicOnErr(err)
+				err = bdbMs.SetMetric("crdt.CrdtPendingLocalWritesMax", float64(stats.CrdtPendingLocalWritesMax), metric.GAUGE)
+				panicOnErr(err)
+				err = bdbMs.SetMetric("crdt.CrdtPendingLocalWritesMin", float64(stats.CrdtPendingLocalWritesMin), metric.GAUGE)
+				panicOnErr(err)
+				err = bdbMs.SetMetric("crdt.CrdtLocalIngressLagTime", float64(stats.CrdtLocalIngressLagTime), metric.GAUGE)
+				panicOnErr(err)
+
+			}
 		}
+		err = ms.SetMetric("cluster.TotalShardsUsed", float64(clusterTotalShards), metric.GAUGE)
+		panicOnErr(err)
+		err = ms.SetMetric("cluster.TotalMemoryUsed", float64(clusterTotalMemoryUsage), metric.GAUGE)
+		panicOnErr(err)
+		err = ms.SetMetric("cluster.TotalReqs", float64(clusterTotalOps), metric.GAUGE)
+		panicOnErr(err)
 	}
 
 	panicOnErr(i.Publish())

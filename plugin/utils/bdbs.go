@@ -12,6 +12,8 @@ type bdbConf struct {
 	ShardsUsed int
 	Endpoints  int
 	Bigstore   bool
+	Crdt       bool
+	SyncStatus int
 }
 
 var bdbsDat []RLdbd
@@ -37,6 +39,7 @@ func GetBDBs(conf *RLConf) (map[int]bdbConf, error) {
 			Limit:      bdb.MemorySize,
 			ShardsUsed: bdb.ShardsCount,
 			Bigstore:   bdb.Bigstore,
+			Crdt:       bdb.Crdt,
 		}
 
 		if bdb.Replication {
@@ -44,6 +47,20 @@ func GetBDBs(conf *RLConf) (map[int]bdbConf, error) {
 		}
 
 		j.Endpoints = len(bdb.Endpoints[0].Addr)
+
+		if bdb.Crdt {
+			inSyncs := 0
+			for _, source := range bdb.SyncSources {
+				if source.Status == "in-sync" {
+					inSyncs++
+				}
+			}
+			if inSyncs == len(bdb.SyncSources) {
+				j.SyncStatus = 1
+			} else {
+				j.SyncStatus = 0
+			}
+		}
 
 		d[bdb.Uid] = j
 
