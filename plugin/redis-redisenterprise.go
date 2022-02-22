@@ -172,7 +172,15 @@ func main() {
 				panicOnErr(err)
 			}
 
-			// Update the total cluster metrics
+			// Derived metrics
+			err = bdbMs.SetMetric(
+				"bdb.UsedMemoryPercent",
+				float64(100*(float64(bdbStats[val.Uid].UsedMemory)/float64(val.Limit))),
+				metric.GAUGE,
+			)
+			panicOnErr(err)
+
+			// Update the total cluster metrics from each BDB
 			clusterTotalShards += val.ShardsUsed
 			clusterTotalMemoryUsage += float64(bdbStats[val.Uid].UsedMemory)
 			clusterTotalOps += float64(bdbStats[val.Uid].TotalReq)
@@ -204,9 +212,17 @@ func main() {
 
 			}
 		}
+
+		// Set the top level cluster aggregated metrics
 		err = ms.SetMetric("cluster.TotalShardsUsed", float64(clusterTotalShards), metric.GAUGE)
 		panicOnErr(err)
 		err = ms.SetMetric("cluster.TotalMemoryUsed", float64(clusterTotalMemoryUsage), metric.GAUGE)
+		panicOnErr(err)
+		err = ms.SetMetric(
+			"cluster.TotalMemoryUsedPercent",
+			float64(100*float64(clusterTotalMemoryUsage)/float64(nodes.NodeMemory)),
+			metric.GAUGE,
+		)
 		panicOnErr(err)
 		err = ms.SetMetric("cluster.TotalReqs", float64(clusterTotalOps), metric.GAUGE)
 		panicOnErr(err)
