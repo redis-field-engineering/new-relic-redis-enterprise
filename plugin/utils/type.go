@@ -132,14 +132,3 @@ type RLEvent struct {
 	Description        string    `json:"description,omitempty"`
 	UserName           string    `json:"user_name,omitempty"`
 }
-
-type CrdtStats struct {
-	PeerStats []struct {
-		Intervals []struct {
-			CrdtEgressBytes             float64 `json:"egress_bytes"`
-			CrdtEgressBytesDecompressed float64 `json:"egress_bytes_decompressed"`
-			CrdtPendingLocalWritesMax   float64 `json:"pending_local_writes_max"`
-			CrdtPendingLocalWritesMin   float64 `json:"pending_local_writes_min"`
-		} `json:"intervals"`
-	} `json:"peer_stats"`
-}

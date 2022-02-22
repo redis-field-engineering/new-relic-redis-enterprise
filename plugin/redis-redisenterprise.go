@@ -172,6 +172,27 @@ func main() {
 			if val.Crdt {
 				err = bdbMs.SetMetric("bdb.CrdtSyncStatus", float64(val.SyncStatus), metric.GAUGE)
 				panicOnErr(err)
+				st := time.Now().Add(time.Duration(-args.Eventtime) * time.Second)
+				params := map[string]string{
+					"stime":    timeutil.Strftime(&st, "%Y-%m-%dT%H:%M:%SZ"),
+					"interval": "10sec",
+				}
+				stats, err := utils.GetCrdt(conf, val.Uid, params)
+				panicOnErr(err)
+				err = bdbMs.SetMetric("crdt.CrdtEgressBytes", float64(stats.CrdtEgressBytes), metric.GAUGE)
+				panicOnErr(err)
+				err = bdbMs.SetMetric("crdt.CrdtEgressBytesDecompressed", float64(stats.CrdtEgressBytesDecompressed), metric.GAUGE)
+				panicOnErr(err)
+				err = bdbMs.SetMetric("crdt.CrdtIngressBytes", float64(stats.CrdtIngressBytes), metric.GAUGE)
+				panicOnErr(err)
+				err = bdbMs.SetMetric("crdt.CrdtIngressBytesDecompressed", float64(stats.CrdtIngressBytesDecompressed), metric.GAUGE)
+				panicOnErr(err)
+				err = bdbMs.SetMetric("crdt.CrdtPendingLocalWritesMax", float64(stats.CrdtPendingLocalWritesMax), metric.GAUGE)
+				panicOnErr(err)
+				err = bdbMs.SetMetric("crdt.CrdtPendingLocalWritesMin", float64(stats.CrdtPendingLocalWritesMin), metric.GAUGE)
+				panicOnErr(err)
+				err = bdbMs.SetMetric("crdt.CrdtLocalIngressLagTime", float64(stats.CrdtLocalIngressLagTime), metric.GAUGE)
+				panicOnErr(err)
 
 			}
 		}
