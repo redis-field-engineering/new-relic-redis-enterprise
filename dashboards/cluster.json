@@ -1,5 +1,5 @@
 {
-  "name": "Redis Enterprise Database Metrics",
+  "name": "Redis Enterprise Cluster Metrics",
   "description": null,
   "permissions": "PUBLIC_READ_WRITE",
   "pages": [
@@ -17,7 +17,7 @@
             "height": 2,
             "width": 3
           },
-          "title": "Latency (μs)",
+          "title": "Cluster Total Memory",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -28,7 +28,7 @@
             "nrqlQueries": [
               {
                 "accountId": 3321735,
-                "query": "SELECT average(`bdb.AvgLatency`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+                "query": "SELECT average(`cluster.ClusterTotalMemory`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
             "yAxisLeft": {
@@ -43,66 +43,6 @@
           },
           "layout": {
             "column": 4,
-            "row": 1,
-            "height": 2,
-            "width": 3
-          },
-          "title": "Conns",
-          "rawConfiguration": {
-            "facet": {
-              "showOtherSeries": false
-            },
-            "legend": {
-              "enabled": true
-            },
-            "nrqlQueries": [
-              {
-                "accountId": 3321735,
-                "query": "SELECT average(`bdb.Conns`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
-              }
-            ],
-            "yAxisLeft": {
-              "zero": true
-            }
-          },
-          "linkedEntityGuids": null
-        },
-        {
-          "visualization": {
-            "id": "viz.area"
-          },
-          "layout": {
-            "column": 7,
-            "row": 1,
-            "height": 2,
-            "width": 3
-          },
-          "title": "Requests",
-          "rawConfiguration": {
-            "facet": {
-              "showOtherSeries": false
-            },
-            "legend": {
-              "enabled": true
-            },
-            "nrqlQueries": [
-              {
-                "accountId": 3321735,
-                "query": "SELECT average(`bdb.TotalReq`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
-              }
-            ],
-            "yAxisLeft": {
-              "zero": true
-            }
-          },
-          "linkedEntityGuids": null
-        },
-        {
-          "visualization": {
-            "id": "viz.area"
-          },
-          "layout": {
-            "column": 10,
             "row": 1,
             "height": 2,
             "width": 3
@@ -118,7 +58,7 @@
             "nrqlQueries": [
               {
                 "accountId": 3321735,
-                "query": "SELECT average(`bdb.UsedMemoryPercent`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+                "query": "SELECT average(`cluster.TotalMemoryUsedPercent`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
             "yAxisLeft": {
@@ -132,12 +72,12 @@
             "id": "viz.line"
           },
           "layout": {
-            "column": 1,
-            "row": 3,
+            "column": 7,
+            "row": 1,
             "height": 2,
-            "width": 4
+            "width": 3
           },
-          "title": "Bandwidth In",
+          "title": "Node Count",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -148,7 +88,11 @@
             "nrqlQueries": [
               {
                 "accountId": 3321735,
-                "query": "SELECT average(`bdb.IngressBytes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+                "query": "SELECT average(`cluster.ClusterActiveNodes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+              },
+              {
+                "accountId": 3321735,
+                "query": "SELECT average(`cluster.ClusterNodes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
             "yAxisLeft": {
@@ -160,6 +104,70 @@
         {
           "visualization": {
             "id": "viz.line"
+          },
+          "layout": {
+            "column": 10,
+            "row": 1,
+            "height": 2,
+            "width": 3
+          },
+          "title": "Core Count",
+          "rawConfiguration": {
+            "facet": {
+              "showOtherSeries": false
+            },
+            "legend": {
+              "enabled": true
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 3321735,
+                "query": "SELECT average(`cluster.ClusterTotalCores`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+              },
+              {
+                "accountId": 3321735,
+                "query": "SELECT average(`cluster.ClusterNodes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+              }
+            ],
+            "yAxisLeft": {
+              "zero": true
+            }
+          },
+          "linkedEntityGuids": null
+        },
+        {
+          "visualization": {
+            "id": "viz.area"
+          },
+          "layout": {
+            "column": 1,
+            "row": 3,
+            "height": 2,
+            "width": 4
+          },
+          "title": "Days Remaining on License",
+          "rawConfiguration": {
+            "facet": {
+              "showOtherSeries": false
+            },
+            "legend": {
+              "enabled": true
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 3321735,
+                "query": "SELECT min(`cluster.DaysUntilExpiration`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+              }
+            ],
+            "yAxisLeft": {
+              "zero": true
+            }
+          },
+          "linkedEntityGuids": null
+        },
+        {
+          "visualization": {
+            "id": "viz.area"
           },
           "layout": {
             "column": 5,
@@ -167,7 +175,7 @@
             "height": 2,
             "width": 4
           },
-          "title": "Bandwidth Out",
+          "title": "Shards Licensed",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -178,7 +186,7 @@
             "nrqlQueries": [
               {
                 "accountId": 3321735,
-                "query": "SELECT average(`bdb.EgressBytes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+                "query": "SELECT max(`cluster.ShardsLicense`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
             "yAxisLeft": {
@@ -189,7 +197,7 @@
         },
         {
           "visualization": {
-            "id": "viz.line"
+            "id": "viz.area"
           },
           "layout": {
             "column": 9,
@@ -197,7 +205,7 @@
             "height": 2,
             "width": 4
           },
-          "title": "Memory Usage",
+          "title": "Shards Used",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -208,11 +216,7 @@
             "nrqlQueries": [
               {
                 "accountId": 3321735,
-                "query": "SELECT average(`bdb.MemoryLimit`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
-              },
-              {
-                "accountId": 3321735,
-                "query": "SELECT average(`bdb.UsedMemory`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+                "query": "SELECT average(`cluster.TotalShardsUsed`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
             "yAxisLeft": {
@@ -228,10 +232,10 @@
           "layout": {
             "column": 1,
             "row": 5,
-            "height": 2,
-            "width": 3
+            "height": 4,
+            "width": 12
           },
-          "title": "Read Latency (μs)",
+          "title": "Total Operations",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -242,97 +246,7 @@
             "nrqlQueries": [
               {
                 "accountId": 3321735,
-                "query": "SELECT average(`bdb.AvgReadLatency`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
-              }
-            ],
-            "yAxisLeft": {
-              "zero": true
-            }
-          },
-          "linkedEntityGuids": null
-        },
-        {
-          "visualization": {
-            "id": "viz.area"
-          },
-          "layout": {
-            "column": 4,
-            "row": 5,
-            "height": 2,
-            "width": 3
-          },
-          "title": "Write Latency (μs)",
-          "rawConfiguration": {
-            "facet": {
-              "showOtherSeries": false
-            },
-            "legend": {
-              "enabled": true
-            },
-            "nrqlQueries": [
-              {
-                "accountId": 3321735,
-                "query": "SELECT average(`bdb.AvgWriteLatency`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
-              }
-            ],
-            "yAxisLeft": {
-              "zero": true
-            }
-          },
-          "linkedEntityGuids": null
-        },
-        {
-          "visualization": {
-            "id": "viz.area"
-          },
-          "layout": {
-            "column": 7,
-            "row": 5,
-            "height": 2,
-            "width": 3
-          },
-          "title": "Evicted Objects",
-          "rawConfiguration": {
-            "facet": {
-              "showOtherSeries": false
-            },
-            "legend": {
-              "enabled": true
-            },
-            "nrqlQueries": [
-              {
-                "accountId": 3321735,
-                "query": "SELECT average(`bdb.EvictedObjects`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
-              }
-            ],
-            "yAxisLeft": {
-              "zero": true
-            }
-          },
-          "linkedEntityGuids": null
-        },
-        {
-          "visualization": {
-            "id": "viz.area"
-          },
-          "layout": {
-            "column": 10,
-            "row": 5,
-            "height": 2,
-            "width": 3
-          },
-          "title": "Expired Objects",
-          "rawConfiguration": {
-            "facet": {
-              "showOtherSeries": false
-            },
-            "legend": {
-              "enabled": true
-            },
-            "nrqlQueries": [
-              {
-                "accountId": 3321735,
-                "query": "SELECT average(`bdb.ExpiredObjects`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+                "query": "SELECT average(`cluster.TotalReqs`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
             "yAxisLeft": {

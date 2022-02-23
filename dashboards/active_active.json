@@ -1,5 +1,5 @@
 {
-  "name": "Redis Enterprise Database Metrics",
+  "name": "Redis Enterprise Database CRDT",
   "description": null,
   "permissions": "PUBLIC_READ_WRITE",
   "pages": [
@@ -14,10 +14,10 @@
           "layout": {
             "column": 1,
             "row": 1,
-            "height": 2,
+            "height": 3,
             "width": 3
           },
-          "title": "Latency (μs)",
+          "title": "Sync Status",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -28,7 +28,7 @@
             "nrqlQueries": [
               {
                 "accountId": 3321735,
-                "query": "SELECT average(`bdb.AvgLatency`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+                "query": "SELECT average(`bdb.CrdtSyncStatus`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
             "yAxisLeft": {
@@ -44,10 +44,10 @@
           "layout": {
             "column": 4,
             "row": 1,
-            "height": 2,
+            "height": 3,
             "width": 3
           },
-          "title": "Conns",
+          "title": "Local Lag (seconds)",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -58,7 +58,7 @@
             "nrqlQueries": [
               {
                 "accountId": 3321735,
-                "query": "SELECT average(`bdb.Conns`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+                "query": "SELECT average(`crdt.CrdtLocalIngressLagTime`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
             "yAxisLeft": {
@@ -74,10 +74,10 @@
           "layout": {
             "column": 7,
             "row": 1,
-            "height": 2,
+            "height": 3,
             "width": 3
           },
-          "title": "Requests",
+          "title": "Pending Writes Max",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -88,7 +88,7 @@
             "nrqlQueries": [
               {
                 "accountId": 3321735,
-                "query": "SELECT average(`bdb.TotalReq`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+                "query": "SELECT average(`crdt.CrdtPendingLocalWritesMax`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
             "yAxisLeft": {
@@ -104,10 +104,10 @@
           "layout": {
             "column": 10,
             "row": 1,
-            "height": 2,
+            "height": 3,
             "width": 3
           },
-          "title": "% Used Memory",
+          "title": "Pending Writes Min",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -118,7 +118,7 @@
             "nrqlQueries": [
               {
                 "accountId": 3321735,
-                "query": "SELECT average(`bdb.UsedMemoryPercent`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+                "query": "SELECT average(`crdt.CrdtPendingLocalWritesMin`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
             "yAxisLeft": {
@@ -129,13 +129,13 @@
         },
         {
           "visualization": {
-            "id": "viz.line"
+            "id": "viz.area"
           },
           "layout": {
             "column": 1,
-            "row": 3,
+            "row": 4,
             "height": 2,
-            "width": 4
+            "width": 6
           },
           "title": "Bandwidth In",
           "rawConfiguration": {
@@ -148,131 +148,7 @@
             "nrqlQueries": [
               {
                 "accountId": 3321735,
-                "query": "SELECT average(`bdb.IngressBytes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
-              }
-            ],
-            "yAxisLeft": {
-              "zero": true
-            }
-          },
-          "linkedEntityGuids": null
-        },
-        {
-          "visualization": {
-            "id": "viz.line"
-          },
-          "layout": {
-            "column": 5,
-            "row": 3,
-            "height": 2,
-            "width": 4
-          },
-          "title": "Bandwidth Out",
-          "rawConfiguration": {
-            "facet": {
-              "showOtherSeries": false
-            },
-            "legend": {
-              "enabled": true
-            },
-            "nrqlQueries": [
-              {
-                "accountId": 3321735,
-                "query": "SELECT average(`bdb.EgressBytes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
-              }
-            ],
-            "yAxisLeft": {
-              "zero": true
-            }
-          },
-          "linkedEntityGuids": null
-        },
-        {
-          "visualization": {
-            "id": "viz.line"
-          },
-          "layout": {
-            "column": 9,
-            "row": 3,
-            "height": 2,
-            "width": 4
-          },
-          "title": "Memory Usage",
-          "rawConfiguration": {
-            "facet": {
-              "showOtherSeries": false
-            },
-            "legend": {
-              "enabled": true
-            },
-            "nrqlQueries": [
-              {
-                "accountId": 3321735,
-                "query": "SELECT average(`bdb.MemoryLimit`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
-              },
-              {
-                "accountId": 3321735,
-                "query": "SELECT average(`bdb.UsedMemory`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
-              }
-            ],
-            "yAxisLeft": {
-              "zero": true
-            }
-          },
-          "linkedEntityGuids": null
-        },
-        {
-          "visualization": {
-            "id": "viz.area"
-          },
-          "layout": {
-            "column": 1,
-            "row": 5,
-            "height": 2,
-            "width": 3
-          },
-          "title": "Read Latency (μs)",
-          "rawConfiguration": {
-            "facet": {
-              "showOtherSeries": false
-            },
-            "legend": {
-              "enabled": true
-            },
-            "nrqlQueries": [
-              {
-                "accountId": 3321735,
-                "query": "SELECT average(`bdb.AvgReadLatency`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
-              }
-            ],
-            "yAxisLeft": {
-              "zero": true
-            }
-          },
-          "linkedEntityGuids": null
-        },
-        {
-          "visualization": {
-            "id": "viz.area"
-          },
-          "layout": {
-            "column": 4,
-            "row": 5,
-            "height": 2,
-            "width": 3
-          },
-          "title": "Write Latency (μs)",
-          "rawConfiguration": {
-            "facet": {
-              "showOtherSeries": false
-            },
-            "legend": {
-              "enabled": true
-            },
-            "nrqlQueries": [
-              {
-                "accountId": 3321735,
-                "query": "SELECT average(`bdb.AvgWriteLatency`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+                "query": "SELECT average(`crdt.CrdtIngressBytes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
             "yAxisLeft": {
@@ -287,11 +163,11 @@
           },
           "layout": {
             "column": 7,
-            "row": 5,
+            "row": 4,
             "height": 2,
-            "width": 3
+            "width": 6
           },
-          "title": "Evicted Objects",
+          "title": "Bandwidth Out",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -302,7 +178,7 @@
             "nrqlQueries": [
               {
                 "accountId": 3321735,
-                "query": "SELECT average(`bdb.EvictedObjects`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+                "query": "SELECT average(`crdt.CrdtEgressBytes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
             "yAxisLeft": {
@@ -316,12 +192,12 @@
             "id": "viz.area"
           },
           "layout": {
-            "column": 10,
-            "row": 5,
+            "column": 1,
+            "row": 6,
             "height": 2,
-            "width": 3
+            "width": 6
           },
-          "title": "Expired Objects",
+          "title": "Bandwidth In Decompressed",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -332,7 +208,37 @@
             "nrqlQueries": [
               {
                 "accountId": 3321735,
-                "query": "SELECT average(`bdb.ExpiredObjects`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+                "query": "SELECT average(`crdt.CrdtIngressBytesDecompressed`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
+              }
+            ],
+            "yAxisLeft": {
+              "zero": true
+            }
+          },
+          "linkedEntityGuids": null
+        },
+        {
+          "visualization": {
+            "id": "viz.area"
+          },
+          "layout": {
+            "column": 7,
+            "row": 6,
+            "height": 2,
+            "width": 6
+          },
+          "title": "Bandwidth Out Decompressed",
+          "rawConfiguration": {
+            "facet": {
+              "showOtherSeries": false
+            },
+            "legend": {
+              "enabled": true
+            },
+            "nrqlQueries": [
+              {
+                "accountId": 3321735,
+                "query": "SELECT average(`crdt.CrdtEgressBytesDecompressed`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
             "yAxisLeft": {
