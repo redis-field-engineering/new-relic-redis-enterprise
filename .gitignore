@@ -5,3 +5,4 @@ ansible/files/*.whl
 devnote*.md
 .venv/*
 plugin/redis-redisenterprise
+dist/*
