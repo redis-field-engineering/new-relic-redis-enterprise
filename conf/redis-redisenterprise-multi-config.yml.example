@@ -1,0 +1,39 @@
+integration_name: com.redis.redisenterprise
+
+instances:
+  - name: redis-metrics
+    command: metrics
+    arguments:
+      hostname: localhost
+      port: 9443
+      username: admin@example.com
+      password: testing123
+    labels:
+      env: production
+      role: cache
+
+  - name: redis-inventory
+    command: inventory
+    arguments:
+      hostname: localhost
+      port: 9443
+      username: admin@example.com
+      password: testing123
+    labels:
+      env: production
+      role: cache
+
+  - name: redis-events
+    command: events
+    arguments:
+      hostname: localhost
+      port: 9443
+      username: admin@example.com
+      password: testing123
+    interval: 60
+    arguments:
+      eventtime: 60
+    labels:
+      env: production
+      role: cache      
+

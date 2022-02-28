@@ -6,3 +6,7 @@ devnote*.md
 .venv/*
 plugin/redis-redisenterprise
 dist/*
+
+dist/
+
+dist/

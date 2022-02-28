@@ -1,0 +1,33 @@
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - 386
+
+    dir: plugin
+
+archives:
+  - 
+    replacements:
+      386: i386
+      amd64: x86_64
+    files:
+      - conf/redis-redisenterprise-definition.yml
+      - conf/redis-redisenterprise-multi-config.yml.example
+
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ incpatch .Version }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
