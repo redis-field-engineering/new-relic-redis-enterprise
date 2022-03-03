@@ -5,13 +5,9 @@ import (
 	"fmt"
 )
 
-type rlClusterConfig struct {
-	Name string `json:"name"`
-}
+var cluster RLClusterConfig
 
-var cluster rlClusterConfig
-
-func GetCluster(conf *RLConf) (rlClusterConfig, error) {
+func GetCluster(conf *RLConf) (RLClusterConfig, error) {
 	u, httpCode, err := APIget(conf, "/v1/cluster", nil)
 	if err != nil {
 		return cluster, fmt.Errorf("unable to connect: %s", err)
