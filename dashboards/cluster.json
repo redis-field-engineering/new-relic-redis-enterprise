@@ -1,7 +1,6 @@
 {
   "name": "Redis Enterprise Cluster Metrics",
   "description": null,
-  "permissions": "PUBLIC_READ_WRITE",
   "pages": [
     {
       "name": "Redis Enterprise",
@@ -27,7 +26,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`cluster.ClusterTotalMemory`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -57,7 +56,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`cluster.TotalMemoryUsedPercent`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -87,11 +86,11 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`cluster.ClusterActiveNodes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               },
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`cluster.ClusterNodes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -121,11 +120,11 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`cluster.ClusterTotalCores`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               },
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`cluster.ClusterNodes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -155,7 +154,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT min(`cluster.DaysUntilExpiration`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -185,7 +184,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT max(`cluster.ShardsLicense`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -215,7 +214,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`cluster.TotalShardsUsed`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -245,7 +244,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`cluster.TotalReqs`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],

@@ -4,6 +4,19 @@
 
 #### Ensure New Relic agent is installed and running
 
+[Agent installation instructions](https://docs.newrelic.com/docs/infrastructure/install-infrastructure-agent/get-started/install-infrastructure-agent/)
+
+
+Check the service status
+
+```
+sudo service newrelic-infra status -l
+
+# OR depending on your Linux distro
+
+sudo /bin/systemctl status  -l newrelic-infra.service
+```
+
 
 #### Pull the rlease from Github Releases
 

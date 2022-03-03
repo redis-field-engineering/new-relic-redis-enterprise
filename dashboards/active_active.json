@@ -1,7 +1,6 @@
 {
   "name": "Redis Enterprise Database CRDT",
   "description": null,
-  "permissions": "PUBLIC_READ_WRITE",
   "pages": [
     {
       "name": "Redis Enterprise",
@@ -27,7 +26,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`bdb.CrdtSyncStatus`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -57,7 +56,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`crdt.CrdtLocalIngressLagTime`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -87,7 +86,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`crdt.CrdtPendingLocalWritesMax`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -117,7 +116,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`crdt.CrdtPendingLocalWritesMin`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -147,7 +146,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`crdt.CrdtIngressBytes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -177,7 +176,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`crdt.CrdtEgressBytes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -207,7 +206,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`crdt.CrdtIngressBytesDecompressed`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -237,7 +236,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 3321735,
+                "accountId": 0,
                 "query": "SELECT average(`crdt.CrdtEgressBytesDecompressed`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
