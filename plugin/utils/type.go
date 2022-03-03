@@ -12,6 +12,10 @@ type RLConf struct {
 	Pass     string
 }
 
+type RLClusterConfig struct {
+	Name string `json:"name"`
+}
+
 type RLlicenseConfig struct {
 	ActivationDate      time.Time `json:"activation_date"`
 	ExpirationDate      time.Time `json:"expiration_date"`

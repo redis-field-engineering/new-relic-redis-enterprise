@@ -55,6 +55,10 @@ func main() {
 		return
 	}
 
+	// Get the cluster configuration
+	cluster, err := utils.GetCluster(conf)
+	panicOnErr(err)
+
 	// Get the license information
 	license, err := utils.GetLicense(conf)
 	panicOnErr(err)
@@ -72,11 +76,11 @@ func main() {
 	panicOnErr(err)
 
 	// Create Entity, entities name must be unique
-	e1, err := i.Entity(args.Hostname, "custom")
+	e1, err := i.Entity(cluster.Name, "custom")
 	panicOnErr(err)
 
 	for _, val := range bdbs {
-		s := fmt.Sprintf("%s:%s", args.Hostname, val.DBName)
+		s := fmt.Sprintf("%s:%s", cluster.Name, val.DBName)
 		bdbEnts[val.Uid], err = i.Entity(s, "custom")
 		panicOnErr(err)
 	}
