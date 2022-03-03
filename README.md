@@ -2,6 +2,7 @@
 
 ![img](https://raw.githubusercontent.com/DataDog/integrations-extras/master/redisenterprise/images/redis-enterprise.jpg)
 
+This integration is geared towards self-hosted Redis Enterprise clusters and not Redis hosted cloud or various marketplace Redis Enterprise offerings.
 
 ## Plugin Architecture
 
@@ -14,11 +15,46 @@ This is the preferred method of installation as it will also provide host level 
 ![img](docs/NewRelicLocalhostMode.png)
 
 
+Sample config
+
+```
+instances:
+  - name: redis-metrics
+    command: metrics
+    arguments:
+      hostname: localhost
+      port: 9443
+      username: admin@example.com
+      password: myPass
+
+```
+
 #### Cluster Mode
 
 The New Relic agent on a node outside of the Redis Enterprise cluster can scrape multiple clusters for metrics
 
 ![img](docs/NewRelicClusterMode.png)
+
+Sample config
+
+```
+instances:
+  - name: redis-metrics1
+    command: metrics
+    arguments:
+      hostname: cluster1.fqdn
+      port: 9443
+      username: admin@example.com
+      password: myPass
+  - name: redis-metrics2
+    command: metrics
+    arguments:
+      hostname: cluster.fqdn
+      port: 9443
+      username: admin@example.com
+      password: myPass
+
+```
 
 ## Installing the plugin
 
