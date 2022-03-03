@@ -6,18 +6,18 @@ os: linux
 commands:
   metrics:
     command:
-      - ./bin/redis-redisenterprise
+      - ./bin/newrelic-redis-enterprise
       - --metrics
     interval: 15
 
   inventory:
     command:
-      - ./bin/redis-redisenterprise
+      - ./bin/newrelic-redis-enterprise
       - --inventory
     prefix: config/redis-redisenterprise
     interval: 15
   events:
     command:
-    - ./bin/redis-redisenterprise
+    - ./bin/newrelic-redis-enterprise
     - --events
     interval: 60
