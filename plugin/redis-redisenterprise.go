@@ -85,41 +85,6 @@ func main() {
 		panicOnErr(err)
 	}
 
-	// Add event when redis starts
-	if args.All() || args.Events {
-		st := time.Now().Add(time.Duration(-args.Eventtime) * time.Second)
-		params := map[string]string{"stime": timeutil.Strftime(&st, "%Y-%m-%dT%H:%M:%SZ")}
-		events, err := utils.GetEvents(conf, params)
-		panicOnErr(err)
-		for _, evnt := range events {
-			tags := make(map[string]interface{})
-			outstring := ""
-			if evnt.Description != "" {
-				outstring = evnt.Description
-			} else {
-				outstring = evnt.Type
-			}
-			p := []string{"OriginatorUsername", "OriginatorEmail", "NodeUID", "ModuleName", "BdbName", "UserUID", "Type", "Description"}
-			for _, x := range p {
-				s := reflect.ValueOf(evnt).FieldByName(x).Interface().(string)
-				if s != "" {
-					tags[x] = s
-				}
-			}
-			ev := event.NewNotification(outstring)
-			ev.Attributes = tags
-			/*
-			 TODO: Add event time somehow
-			 ev.Timestamp = evnt.Time.Unix() doesn't work in v3
-			 maybe persist and just get the current run time so we don't duplicate events
-			 https://github.com/newrelic/infra-integrations-sdk/blob/master/docs/toolset/persist.md
-			*/
-			err = e1.AddEvent(ev)
-			panicOnErr(err)
-
-		}
-	}
-
 	// Add Inventory
 	if args.All() || args.Inventory {
 		err := e1.SetInventoryItem("RedisEnterpriseType", "value", "cluster")

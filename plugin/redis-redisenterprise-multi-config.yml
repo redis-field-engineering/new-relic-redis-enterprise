@@ -18,12 +18,3 @@ instances:
       env: production
       role: cache
 
-  - name: redis-events
-    command: events
-    interval: 60
-    arguments:
-      eventtime: 60
-    labels:
-      env: production
-      role: cache      
-
