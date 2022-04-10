@@ -58,6 +58,20 @@ instances:
 
 ## Installing the plugin
 
+#### Create a monitoring account on your Redis Enterprise
+
+Login to your Redis Entprise Instance and click on Access Control
+
+If you have LDAP enabled you can use LDAP, but an internal account is highly recommended.
+
+![create account](docs/account_1.png)
+
+
+#### Add a new user account with Cluster View Permissions
+
+![create account](docs/account_2.png)
+
+
 #### Ensure New Relic agent is installed and running
 
 [Agent installation instructions](https://docs.newrelic.com/docs/infrastructure/install-infrastructure-agent/get-started/install-infrastructure-agent/)
@@ -104,6 +118,22 @@ cp conf/redis-redisenterprise-multi-config.yml.example conf/redis-redisenterpris
 vi conf/redis-redisenterprise-multi-config.yml
 mv conf/redis-redisenterprise-multi-config.yml /etc/newrelic-infra/integrations.d/redis-redisenterprise-config.yaml
 ```
+
+Configuration parameters
+
+| Parameter | Usage | Notes |
+|--|--|--|
+|hostname| FQDN of the Redis Cluster | If running in localhost mode use ```localhost``` |
+|port| Port of the Redis Enterprise API | default port is ```9443``` |
+|username| User created above | is an email address like ```devops@example.com``` |
+|password| Password created above |  |
+
+You can test your username/password combination with curl
+
+```
+curl -vk -u devops@example.com:password  https://CLUSTER.FQDN:9443/v1/cluster
+```
+
 
 #### Restart New relic
 
