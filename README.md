@@ -24,7 +24,7 @@ instances:
     arguments:
       hostname: localhost
       port: 9443
-      username: admin@example.com
+      username: devops@example.com
       password: myPass
 
 ```
@@ -44,14 +44,14 @@ instances:
     arguments:
       hostname: cluster1.fqdn
       port: 9443
-      username: admin@example.com
+      username: devops@example.com
       password: myPass
   - name: redis-metrics2
     command: metrics
     arguments:
       hostname: cluster.fqdn
       port: 9443
-      username: admin@example.com
+      username: devops@example.com
       password: myPass
 
 ```
