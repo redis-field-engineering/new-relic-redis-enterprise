@@ -156,7 +156,18 @@ Click on Import Dashboards and import the following dashboards
 
 #### Cluster Metrics
 ![cluster metrics](docs/newrelic_cluster_dashboard.png)
+
 #### Database Metrics
 ![database metrics](docs/newrelic_database_dashboard.png)
+
 #### Active/Active Metrics
 ![crdt metrics](docs/newrelic_crdt_dashboard.png)
+
+
+### Support
+
+Contact the [Redis Field Engineering Team][1].
+
+
+
+[1]: mailto:redis.observability@redis.com?subject=NewRelic%20Integration%20Support
