@@ -150,3 +150,13 @@ Click on Import Dashboards and import the following dashboards
 - [Redis Enterprise Cluster Metrics](dashboards/cluster.json)
 - [Redis Enterprise Database Metrics](dashboards/db.json)
 - [Redis Enterprise Active/Active Metrics](dashboards/active_active.json)
+
+
+### Dashboards
+
+#### Cluster Metrics
+![cluster metrics](docs/newrelic_cluster_dashboard.png)
+#### Database Metrics
+![database metrics](docs/newrelic_database_dashboard.png)
+#### Active/Active Metrics
+![crdt metrics](docs/newrelic_crdt_dashboard.png)
