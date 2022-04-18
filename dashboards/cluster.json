@@ -1,22 +1,16 @@
 {
   "name": "Redis Enterprise Cluster Metrics",
-  "description": null,
   "pages": [
     {
       "name": "Redis Enterprise",
-      "description": null,
       "widgets": [
         {
-          "visualization": {
-            "id": "viz.area"
-          },
           "layout": {
             "column": 1,
-            "row": 1,
             "height": 2,
+            "row": 1,
             "width": 3
           },
-          "title": "Cluster Total Memory",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -26,7 +20,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`cluster.ClusterTotalMemory`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -34,19 +28,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Cluster Total Memory",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 4,
-            "row": 1,
             "height": 2,
+            "row": 1,
             "width": 3
           },
-          "title": "% Used Memory",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -56,7 +49,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`cluster.TotalMemoryUsedPercent`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -64,19 +57,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
+          "title": "% Used Memory",
+          "visualization": {
+            "id": "viz.area"
+          }
         },
         {
-          "visualization": {
-            "id": "viz.line"
-          },
           "layout": {
             "column": 7,
-            "row": 1,
             "height": 2,
+            "row": 1,
             "width": 3
           },
-          "title": "Node Count",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -86,11 +78,11 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`cluster.ClusterActiveNodes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               },
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`cluster.ClusterNodes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -98,19 +90,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Node Count",
           "visualization": {
             "id": "viz.line"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 10,
-            "row": 1,
             "height": 2,
+            "row": 1,
             "width": 3
           },
-          "title": "Core Count",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -120,31 +111,26 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`cluster.ClusterTotalCores`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
-              },
-              {
-                "accountId": 0,
-                "query": "SELECT average(`cluster.ClusterNodes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
             "yAxisLeft": {
               "zero": true
             }
           },
-          "linkedEntityGuids": null
+          "title": "Core Count",
+          "visualization": {
+            "id": "viz.line"
+          }
         },
         {
-          "visualization": {
-            "id": "viz.area"
-          },
           "layout": {
             "column": 1,
-            "row": 3,
             "height": 2,
+            "row": 3,
             "width": 4
           },
-          "title": "Days Remaining on License",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -154,7 +140,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT min(`cluster.DaysUntilExpiration`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -162,19 +148,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Days Remaining on License",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 5,
-            "row": 3,
             "height": 2,
+            "row": 3,
             "width": 4
           },
-          "title": "Shards Licensed",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -184,7 +169,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT max(`cluster.ShardsLicense`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -192,19 +177,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Shards Licensed",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 9,
-            "row": 3,
             "height": 2,
+            "row": 3,
             "width": 4
           },
-          "title": "Shards Used",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -214,7 +198,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`cluster.TotalShardsUsed`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -222,19 +206,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Shards Used",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 1,
-            "row": 5,
             "height": 4,
+            "row": 5,
             "width": 12
           },
-          "title": "Total Operations",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -244,7 +227,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`cluster.TotalReqs`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -252,9 +235,13 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
+          "title": "Total Operations",
+          "visualization": {
+            "id": "viz.area"
+          }
         }
       ]
     }
-  ]
+  ],
+  "permissions": "PUBLIC_READ_WRITE"
 }

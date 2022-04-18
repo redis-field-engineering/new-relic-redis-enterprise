@@ -1,22 +1,16 @@
 {
   "name": "Redis Enterprise Database CRDT",
-  "description": null,
   "pages": [
     {
       "name": "Redis Enterprise",
-      "description": null,
       "widgets": [
         {
-          "visualization": {
-            "id": "viz.area"
-          },
           "layout": {
             "column": 1,
-            "row": 1,
             "height": 3,
+            "row": 1,
             "width": 3
           },
-          "title": "Sync Status",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -26,7 +20,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`bdb.CrdtSyncStatus`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -34,19 +28,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Sync Status",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 4,
-            "row": 1,
             "height": 3,
+            "row": 1,
             "width": 3
           },
-          "title": "Local Lag (seconds)",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -56,7 +49,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`crdt.CrdtLocalIngressLagTime`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -64,19 +57,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Local Lag (seconds)",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 7,
-            "row": 1,
             "height": 3,
+            "row": 1,
             "width": 3
           },
-          "title": "Pending Writes Max",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -86,7 +78,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`crdt.CrdtPendingLocalWritesMax`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -94,19 +86,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Pending Writes Max",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 10,
-            "row": 1,
             "height": 3,
+            "row": 1,
             "width": 3
           },
-          "title": "Pending Writes Min",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -116,7 +107,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`crdt.CrdtPendingLocalWritesMin`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -124,19 +115,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Pending Writes Min",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 1,
-            "row": 4,
             "height": 2,
+            "row": 4,
             "width": 6
           },
-          "title": "Bandwidth In",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -146,7 +136,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`crdt.CrdtIngressBytes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -154,19 +144,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Bandwidth In",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 7,
-            "row": 4,
             "height": 2,
+            "row": 4,
             "width": 6
           },
-          "title": "Bandwidth Out",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -176,7 +165,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`crdt.CrdtEgressBytes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -184,19 +173,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Bandwidth Out",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 1,
-            "row": 6,
             "height": 2,
+            "row": 6,
             "width": 6
           },
-          "title": "Bandwidth In Decompressed",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -206,7 +194,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`crdt.CrdtIngressBytesDecompressed`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -214,19 +202,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Bandwidth In Decompressed",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 7,
-            "row": 6,
             "height": 2,
+            "row": 6,
             "width": 6
           },
-          "title": "Bandwidth Out Decompressed",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -236,7 +223,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`crdt.CrdtEgressBytesDecompressed`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -244,9 +231,13 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
+          "title": "Bandwidth Out Decompressed",
+          "visualization": {
+            "id": "viz.area"
+          }
         }
       ]
     }
-  ]
+  ],
+  "permissions": "PUBLIC_READ_WRITE"
 }

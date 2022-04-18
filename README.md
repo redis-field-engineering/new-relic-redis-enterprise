@@ -145,7 +145,18 @@ sudo service  newrelic-infra  restart
 
 Go to the [dashboards section](https://one.newrelic.com/dashboards) of your New Relic installation
 
+Find your Account ID which you can find in the URL:
+
+![account id](docs/account_id.png)
+
+
 Click on Import Dashboards and import the following dashboards
+
+For each dashboard you will need to add your account ID  
+
+```
+cat cluster.json |sed -e s/REPLACE_ME_WITH_YOUR_ACCOUNT_ID/<YOUR_ACCOUNT_ID>/g
+```
 
 - [Redis Enterprise Cluster Metrics](dashboards/cluster.json)
 - [Redis Enterprise Database Metrics](dashboards/db.json)

@@ -1,22 +1,16 @@
 {
   "name": "Redis Enterprise Database Metrics",
-  "description": null,
   "pages": [
     {
       "name": "Redis Enterprise",
-      "description": null,
       "widgets": [
         {
-          "visualization": {
-            "id": "viz.area"
-          },
           "layout": {
             "column": 1,
-            "row": 1,
             "height": 2,
+            "row": 1,
             "width": 3
           },
-          "title": "Latency (μs)",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -26,7 +20,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`bdb.AvgLatency`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -34,19 +28,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Latency (μs)",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 4,
-            "row": 1,
             "height": 2,
+            "row": 1,
             "width": 3
           },
-          "title": "Conns",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -56,7 +49,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`bdb.Conns`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -64,19 +57,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Conns",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 7,
-            "row": 1,
             "height": 2,
+            "row": 1,
             "width": 3
           },
-          "title": "Requests",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -86,7 +78,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`bdb.TotalReq`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -94,19 +86,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Requests",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 10,
-            "row": 1,
             "height": 2,
+            "row": 1,
             "width": 3
           },
-          "title": "% Used Memory",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -116,7 +107,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`bdb.UsedMemoryPercent`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -124,19 +115,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
+          "title": "% Used Memory",
+          "visualization": {
+            "id": "viz.area"
+          }
         },
         {
-          "visualization": {
-            "id": "viz.line"
-          },
           "layout": {
             "column": 1,
-            "row": 3,
             "height": 2,
+            "row": 3,
             "width": 4
           },
-          "title": "Bandwidth In",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -146,7 +136,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`bdb.IngressBytes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -154,19 +144,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Bandwidth In",
           "visualization": {
             "id": "viz.line"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 5,
-            "row": 3,
             "height": 2,
+            "row": 3,
             "width": 4
           },
-          "title": "Bandwidth Out",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -176,7 +165,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`bdb.EgressBytes`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -184,19 +173,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Bandwidth Out",
           "visualization": {
             "id": "viz.line"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 9,
-            "row": 3,
             "height": 2,
+            "row": 3,
             "width": 4
           },
-          "title": "Memory Usage",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -206,11 +194,11 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`bdb.MemoryLimit`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               },
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`bdb.UsedMemory`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -218,19 +206,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
+          "title": "Memory Usage",
+          "visualization": {
+            "id": "viz.line"
+          }
         },
         {
-          "visualization": {
-            "id": "viz.area"
-          },
           "layout": {
             "column": 1,
-            "row": 5,
             "height": 2,
+            "row": 5,
             "width": 3
           },
-          "title": "Read Latency (μs)",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -240,7 +227,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`bdb.AvgReadLatency`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -248,19 +235,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Read Latency (μs)",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 4,
-            "row": 5,
             "height": 2,
+            "row": 5,
             "width": 3
           },
-          "title": "Write Latency (μs)",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -270,7 +256,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`bdb.AvgWriteLatency`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -278,19 +264,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Write Latency (μs)",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 7,
-            "row": 5,
             "height": 2,
+            "row": 5,
             "width": 3
           },
-          "title": "Evicted Objects",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -300,7 +285,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`bdb.EvictedObjects`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -308,19 +293,18 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
-        },
-        {
+          "title": "Evicted Objects",
           "visualization": {
             "id": "viz.area"
-          },
+          }
+        },
+        {
           "layout": {
             "column": 10,
-            "row": 5,
             "height": 2,
+            "row": 5,
             "width": 3
           },
-          "title": "Expired Objects",
           "rawConfiguration": {
             "facet": {
               "showOtherSeries": false
@@ -330,7 +314,7 @@
             },
             "nrqlQueries": [
               {
-                "accountId": 0,
+                "accountId": REPLACE_ME_WITH_YOUR_ACCOUNT_ID,
                 "query": "SELECT average(`bdb.ExpiredObjects`) FROM RedisEnterprise FACET entityName SINCE 30 MINUTES AGO TIMESERIES"
               }
             ],
@@ -338,9 +322,13 @@
               "zero": true
             }
           },
-          "linkedEntityGuids": null
+          "title": "Expired Objects",
+          "visualization": {
+            "id": "viz.area"
+          }
         }
       ]
     }
-  ]
+  ],
+  "permissions": "PUBLIC_READ_WRITE"
 }
