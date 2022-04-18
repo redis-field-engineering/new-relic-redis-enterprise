@@ -145,7 +145,7 @@ sudo service  newrelic-infra  restart
 
 Go to the [dashboards section](https://one.newrelic.com/dashboards) of your New Relic installation
 
-Find your Account ID which you can find in the URL:
+Locate your Account ID which you may be found in the URL:
 
 ![account id](docs/account_id.png)
 
@@ -174,6 +174,10 @@ cat cluster.json |sed -e s/REPLACE_ME_WITH_YOUR_ACCOUNT_ID/<YOUR_ACCOUNT_ID>/g
 #### Active/Active Metrics
 ![crdt metrics](docs/newrelic_crdt_dashboard.png)
 
+
+### Monitoring Guide
+
+See our [Monitoring Guide ](docs/RedisEnterpriseMonitoringGuide.md) for suggestions on KPIs to monitor.
 
 ### Support
 
