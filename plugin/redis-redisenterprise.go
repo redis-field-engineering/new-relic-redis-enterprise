@@ -75,12 +75,12 @@ func main() {
 	panicOnErr(err)
 
 	// Create Entity, entities name must be unique
-	e1, err := i.Entity(cluster.Name, "custom")
+	e1, err := i.Entity(cluster.Name, "redisecluster")
 	panicOnErr(err)
 
 	for _, val := range bdbs {
 		s := fmt.Sprintf("%s:%s", cluster.Name, val.DBName)
-		bdbEnts[val.Uid], err = i.Entity(s, "custom")
+		bdbEnts[val.Uid], err = i.Entity(s, "redisedb")
 		panicOnErr(err)
 	}
 
